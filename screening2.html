@@ -1,9 +1,9 @@
 
 <html>
 <head>
-  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.css" />
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.12/themes/css/cartodb.css" />
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <script src="http://libs.cartocdn.com/cartodb.js/v3/3.11/cartodb.js"></script>
+  <script src="http://libs.cartocdn.com/cartodb.js/v3/3.12/cartodb.js"></script>
   
   <!--[if lte IE 8]>
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.ie.css" />
@@ -11,28 +11,56 @@
   <style>
     html, body {width:100%; height:100%; padding: 0; margin: 0;}
     #cartodb-map { width: 100%; height:100%; background: black;}
-	div.cartodb-popup {width:600px; }
-	div.cartodb-popup div.cartodb-popup-content-wrapper {
-		 width:600px; 
-		 max-width:800px; 
+	div.cartodb-popup.v2 {width:600px; }
+	div.cartodb-popup.v2 div.cartodb-popup-content-wrapper {
+		 height: auto;
 	}
-	div.cartodb-popup div.cartodb-popup-content {
-    	width:600px;
-    	max-width: 800px;
+	div.cartodb-popup.v2 div.cartodb-popup-content {
+		height: auto;
     }
+	#layer_toggle{
+		position: absolute;
+		top: 100px;
+		right: 20px;
+		padding: 0;
+	 }
+	 #layer_toggle ul {
+		padding: 0; margin: 0;
+		list-style-type: none;
+	 }
+	 #layer_toggle li {
+		border-bottom: 1px solid #999;
+		padding: 15px 30px;
+		font-family: "Helvetica", Arial;
+		font-size: 13px;
+		color: #444;
+		cursor: auto;
+	  }
+	  #layer_toggle li:hover {
+		background-color: #F0F0F0;
+		cursor: pointer;
+	  }
+
+	  #layer_toggle li.selected {
+		background-color: #EEE;
+	  }
+
   </style>
   
   <script type="infowindow/html" id="infowindow_template">
-    <div class="cartodb-popup">
+    <div class="cartodb-popup v2">
        <a href="#close" class="cartodb-popup-close-button close">x</a>
        <div class="cartodb-popup-content-wrapper">
          <div class="cartodb-popup-content">
          <!-- content.data contains the field info -->
-		    <h4>Number of Screeners</h4>
-		    <h5>Zip code: {{content.data.zipcode}}</h5>
-		    <div id="chart_div">
+		    <div class="legend-labels">
+			 <li>Zip code: {{content.data.zipcode}}</li>
+			 <li>Population: {{content.data.population}}</li>
+			 <li>2014 Screener proportion: {{content.data._14_propx1000}}</li>
+			 </div>
+			 <div id="chart_div">
 			   <script>
-			      draw_chart([{{content.data._2007_count}},{{content.data._2008_count}},{{content.data._2009_count}},{{content.data._2010_count}},{{content.data._2011_count}},{{content.data._2012_count}},{{content.data._2013_count}},{{content.data._2014_count}}]);
+			      draw_chart([{{content.data._2007_screener_count}},{{content.data._2008_screener_count}},{{content.data._2009_screener_count}},{{content.data._2010_screener_count}},{{content.data._2011_screener_count}},{{content.data._2012_screener_count}},{{content.data._2013_screener_count}},{{content.data._2014_screener_count}}]);
 			   </script>
             </div>
          </div>
@@ -77,7 +105,7 @@
         attribution: 'Mapbox <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
       }).addTo(map);
 
-      var layerUrl = 'https://hhsaccelerator.cartodb.com/u/kellyaccess/api/v2_1/viz/02cb8162-112e-11e5-95ee-0e018d66dc29/viz.json';
+      var layerUrl = 'https://hhsaccelerator.cartodb.com/u/kellyaccess/api/v2/viz/02cb8162-112e-11e5-95ee-0e018d66dc29/viz.json';
 
       // change the query for the first layer
 //      var subLayerOptions = {
@@ -85,12 +113,26 @@
 //        cartocss: "#example_cartodbjs_1{marker-fill: #109DCD; marker-width: 5; marker-line-color: white; marker-line-width: 0;}"
 //      }
 
-      cartodb.createLayer(map, layerUrl)
+      cartodb.createLayer(map, layerUrl, {layerSelector:true})
         .addTo(map)
         .on('done', function(layer) {
 //          layer.getSubLayer(0).set(subLayerOptions);
-		   var sublayer = layer.getSubLayer(1);
+		   var sublayerv6 = layer.getSubLayer(1);
+		   sublayerv6.hide();
+		   var sublayer = layer.getSubLayer(2);
   		   sublayer.infowindow.set('template', $('#infowindow_template').html());
+		   var v6_toggle = $('#layer_toggle li');
+		   var v6_clicked = true;
+			v6_toggle.click (function(e){
+				if(!v6_clicked) {
+						sublayerv6.hide()
+						v6_clicked = true;
+					}
+					else {
+						sublayerv6.show()
+						v6_clicked = false;				
+					}
+			});
         }).on('error', function() {
           //log the error
         });
@@ -100,5 +142,10 @@
 
 <body onload="init()">
   <div id='cartodb-map'></div>
+  <div id="layer_toggle" class="cartodb-infobox">
+      <ul>
+        <li data="all" class="selected">V6 layer on/off</li>
+      </ul>
+  </div>
 </body>
 </html>
