@@ -137,12 +137,12 @@
       }
 	    
      var map;
-	 var baseAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM zipcountsallyears_withproportions_merge_ WHERE _14_propx1000 IS NOT NULL AND total_population > 5000 AND cartodb_id =" 
+	 var baseAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM kellyaccess.zipcountsallyears_withpercents_merge WHERE _14_percent IS NOT NULL AND total_population > 5000 AND cartodb_id =" 
 	 var medianIncomeBaseAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM kellyaccess.medianhouseholdincome_acswithrockaways_merge WHERE population >50 AND median_household_income_occupied_housing_units IS NOT null AND cartodb_id ="
 	 
 	 var v6BaseAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM kellyaccess.v6mergedproportion WHERE v6_proportion_x_1000 IS NOT null AND total_population_as_per_acs > 5000 AND cartodb_id ="
 	 
-	 var zipAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM zipcountsallyears_withproportions_merge_ WHERE _14_propx1000 IS NOT NULL AND total_population > 5000 AND zipcode =" 
+	 var zipAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM kellyaccess.zipcountsallyears_withpercents_merge WHERE _14_percent IS NOT NULL AND total_population > 5000 AND zipcode =" 
 	 
 	 var api_key = "&api_key=f5c184857a5f11b2bd0b87e7c4272d41cc099eec"
 	
@@ -191,9 +191,11 @@
 			
 			layer.on('featureClick', function(ev, pos, latlng, data){
 				var cartodb_id = data.cartodb_id;
+				
 				var zipcodedesc;
 				var populationdesc;
 				var proportiondesc;
+					
 				var medianincomedesc;
 				var v6proportiondesc;
 				var inputxy;
@@ -210,10 +212,11 @@
 				});
 				
             	$.getJSON(baseAPI + cartodb_id + api_key, function(res) {
-					inputxy = [res.features[0].properties._2007_screener_count,res.features[0].properties._2008_screener_count,res.features[0].properties._2009_screener_count,res.features[0].properties._2010_screener_count,res.features[0].properties._2011_screener_count,res.features[0].properties._2012_screener_count,res.features[0].properties._2013_screener_count,res.features[0].properties._2014_screener_count];
+					
+					inputxy = [res.features[0].properties._2007_count,res.features[0].properties._2008_count,res.features[0].properties._2009_count,res.features[0].properties._2010_count,res.features[0].properties._2011_count,res.features[0].properties._2012_count,res.features[0].properties._2013_count,res.features[0].properties._2014_count];
 					zipcodedesc = res.features[0].properties.zipcode;
 					populationdesc = res.features[0].properties.population;
-					proportiondesc = res.features[0].properties._14_propx1000;
+					proportiondesc = res.features[0].properties._14_percent;
 					$("#screenerDetails").append('<li>'+'Zipcode: '+zipcodedesc+'</li>'
 												  +'<li>'+'Median Income: '+medianincomedesc+'</li>'
 					                           +'<li>'+'Population: '+populationdesc+'</li>'
