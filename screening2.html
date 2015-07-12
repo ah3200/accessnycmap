@@ -2,6 +2,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.12/themes/css/cartodb.css" />
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <script src="http://libs.cartocdn.com/cartodb.js/v3/3.12/cartodb.js"></script>
   
@@ -11,6 +12,37 @@
   <style>
     html, body {width:100%; height:100%; padding: 0; margin: 0;}
     #cartodb-map { width: 100%; height:100%; background: black;}
+	
+	.sidebar {
+      padding: 16px;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      z-index: 100;
+      background: #ffffff;
+      border-radius: 4px;
+      color: #666;
+      width: 500px;
+      box-sizing: border-box;
+    }
+	
+	.sidebar h4 {
+      margin: 0 0 10px 0;
+      font-size:16px;
+    }
+	
+	 #chartContainer {
+      border-top: 1px dashed #504B9D;
+      padding-top: 7px;
+      margin-top: 9px;
+    }
+
+	#screenerGraph{
+		text-align: right;
+		font-weight: bold;
+		font-size: 8px;
+   }
+
 	div.cartodb-popup.v2 {width:600px; }
 	div.cartodb-popup.v2 div.cartodb-popup-content-wrapper {
 		 height: auto;
@@ -21,7 +53,7 @@
 	#layer_toggle{
 		position: absolute;
 		top: 100px;
-		right: 20px;
+		left: 20px;
 		padding: 0;
 	 }
 	 #layer_toggle ul {
@@ -70,6 +102,7 @@
   </script>
 
   <script>
+  	  var currentZip;
   // load visualization library from google
       google.load('visualization', '1.0', {'packages':['corechart']});
       function draw_chart(data) {
@@ -87,18 +120,24 @@
           var options = {
             title: 'Screeners',
             legend: { position: "none" },
-			  width: 600,
+			  width: 500,
+			  vAxis: {title: "Count"},
+			  hAxis: {title: "Year"}
           };
-          var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+          var chart = new google.visualization.LineChart(document.getElementById('screenerGraph'));
           chart.draw(data, options);
       }
 	    
     var map;
+	 var baseAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM zipcountsallyears_withproportions_merge_ WHERE _14_propx1000 IS NOT NULL AND total_population > 5000 AND cartodb_id =" 
+	 var api_key = "&api_key=f5c184857a5f11b2bd0b87e7c4272d41cc099eec"
+	
+	
     function init(){
       // initiate leaflet map
       map = new L.Map('cartodb-map', { 
-        center: [40.7, -73.9],
-        zoom: 11
+        center: [40.7, -73.8],
+        zoom: 10
       })
 
       L.tileLayer('https://dnv9my2eseobd.cloudfront.net/v3/cartodb.map-4xtxp73f/{z}/{x}/{y}.png', {
@@ -113,14 +152,15 @@
 //        cartocss: "#example_cartodbjs_1{marker-fill: #109DCD; marker-width: 5; marker-line-color: white; marker-line-width: 0;}"
 //      }
 
-      cartodb.createLayer(map, layerUrl, {layerSelector:true})
+      cartodb.createLayer(map, layerUrl, {layerSelector:false})
         .addTo(map)
         .on('done', function(layer) {
 //          layer.getSubLayer(0).set(subLayerOptions);
 		   var sublayerv6 = layer.getSubLayer(1);
 		   sublayerv6.hide();
 		   var sublayer = layer.getSubLayer(2);
-  		   sublayer.infowindow.set('template', $('#infowindow_template').html());
+		   layer.setInteraction(true);
+ // 		   sublayer.infowindow.set('template', $('#infowindow_template').html());
 		   var v6_toggle = $('#layer_toggle li');
 		   var v6_clicked = true;
 			v6_toggle.click (function(e){
@@ -133,6 +173,19 @@
 						v6_clicked = false;				
 					}
 			});
+			layer.on('featureClick', function(ev, pos, latlng, data){
+				var cartodb_id = data.cartodb_id;
+            	$.getJSON(baseAPI + cartodb_id + api_key, function(res) {
+					var inputxy = [res.features[0].properties._2007_screener_count,res.features[0].properties._2008_screener_count,res.features[0].properties._2009_screener_count,res.features[0].properties._2010_screener_count,res.features[0].properties._2011_screener_count,res.features[0].properties._2012_screener_count,res.features[0].properties._2013_screener_count,res.features[0].properties._2014_screener_count];
+					$("#screenerDetails").empty();
+					$("#screenerDetails").append('<li>'+'Zipcode: '+res.features[0].properties.zipcode+'</li>'
+					                           +'<li>'+'Population: '+res.features[0].properties.population+'</li>'
+											      +'<li>'+'2014 Screener Proportion: '+res.features[0].properties._14_propx1000+'</li>');
+					
+					draw_chart(inputxy);
+				});
+			});
+					
         }).on('error', function() {
           //log the error
         });
@@ -146,6 +199,14 @@
       <ul>
         <li data="all" class="selected">V6 layer on/off</li>
       </ul>
+  </div>
+  
+  <div class='sidebar mainSidebar'>
+    <h4 class='Description'>Click over the zipcode to see the data</h4>
+    <div id="chartContainer">
+       <div id="screenerDetails"></div>
+    	<div id="screenerGraph"></div> 
+    </div>
   </div>
 </body>
 </html>
