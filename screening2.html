@@ -50,9 +50,17 @@
 	div.cartodb-popup.v2 div.cartodb-popup-content {
 		height: auto;
     }
+	#searchbox{
+		position: absolute;
+		top: 65px;
+		left: 20px;
+		padding: 0;
+		color: #FFF;
+	 }
+	 
 	#layer_toggle{
 		position: absolute;
-		top: 100px;
+		top: 145px;
 		left: 20px;
 		padding: 0;
 	 }
@@ -128,16 +136,23 @@
           chart.draw(data, options);
       }
 	    
-    var map;
+     var map;
 	 var baseAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM zipcountsallyears_withproportions_merge_ WHERE _14_propx1000 IS NOT NULL AND total_population > 5000 AND cartodb_id =" 
+	 var medianIncomeBaseAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM kellyaccess.medianhouseholdincome_acswithrockaways_merge WHERE population >50 AND median_household_income_occupied_housing_units IS NOT null AND cartodb_id ="
+	 
+	 var v6BaseAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM kellyaccess.v6mergedproportion WHERE v6_proportion_x_1000 IS NOT null AND total_population_as_per_acs > 5000 AND cartodb_id ="
+	 
+	 var zipAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM zipcountsallyears_withproportions_merge_ WHERE _14_propx1000 IS NOT NULL AND total_population > 5000 AND zipcode =" 
+	 
 	 var api_key = "&api_key=f5c184857a5f11b2bd0b87e7c4272d41cc099eec"
 	
+	var layerGroup = new L.LayerGroup();
 	
     function init(){
       // initiate leaflet map
       map = new L.Map('cartodb-map', { 
         center: [40.7, -73.8],
-        zoom: 10
+        zoom: 11
       })
 
       L.tileLayer('https://dnv9my2eseobd.cloudfront.net/v3/cartodb.map-4xtxp73f/{z}/{x}/{y}.png', {
@@ -152,7 +167,7 @@
 //        cartocss: "#example_cartodbjs_1{marker-fill: #109DCD; marker-width: 5; marker-line-color: white; marker-line-width: 0;}"
 //      }
 
-      cartodb.createLayer(map, layerUrl, {layerSelector:false})
+      cartodb.createLayer(map, layerUrl, {layerSelector:false, searchbox:true})
         .addTo(map)
         .on('done', function(layer) {
 //          layer.getSubLayer(0).set(subLayerOptions);
@@ -173,19 +188,75 @@
 						v6_clicked = false;				
 					}
 			});
+			
 			layer.on('featureClick', function(ev, pos, latlng, data){
 				var cartodb_id = data.cartodb_id;
+				var zipcodedesc;
+				var populationdesc;
+				var proportiondesc;
+				var medianincomedesc;
+				var v6proportiondesc;
+				var inputxy;
+				
+				$("#screenerDetails").empty();
+				$("#screenerGraph").empty();
+				
+				$.getJSON(medianIncomeBaseAPI + cartodb_id + api_key, function(res2) {
+					medianincomedesc = res2.features[0].properties.median_household_income_occupied_housing_units;
+				});
+				
+				$.getJSON(v6BaseAPI + cartodb_id + api_key, function(res3) {
+					v6proportiondesc = res3.features[0].properties.v6_proportion_of_pop_that_screened;
+				});
+				
             	$.getJSON(baseAPI + cartodb_id + api_key, function(res) {
-					var inputxy = [res.features[0].properties._2007_screener_count,res.features[0].properties._2008_screener_count,res.features[0].properties._2009_screener_count,res.features[0].properties._2010_screener_count,res.features[0].properties._2011_screener_count,res.features[0].properties._2012_screener_count,res.features[0].properties._2013_screener_count,res.features[0].properties._2014_screener_count];
-					$("#screenerDetails").empty();
-					$("#screenerDetails").append('<li>'+'Zipcode: '+res.features[0].properties.zipcode+'</li>'
-					                           +'<li>'+'Population: '+res.features[0].properties.population+'</li>'
-											      +'<li>'+'2014 Screener Proportion: '+res.features[0].properties._14_propx1000+'</li>');
-					
+					inputxy = [res.features[0].properties._2007_screener_count,res.features[0].properties._2008_screener_count,res.features[0].properties._2009_screener_count,res.features[0].properties._2010_screener_count,res.features[0].properties._2011_screener_count,res.features[0].properties._2012_screener_count,res.features[0].properties._2013_screener_count,res.features[0].properties._2014_screener_count];
+					zipcodedesc = res.features[0].properties.zipcode;
+					populationdesc = res.features[0].properties.population;
+					proportiondesc = res.features[0].properties._14_propx1000;
+					$("#screenerDetails").append('<li>'+'Zipcode: '+zipcodedesc+'</li>'
+												  +'<li>'+'Median Income: '+medianincomedesc+'</li>'
+					                           +'<li>'+'Population: '+populationdesc+'</li>'
+											      +'<li>'+'2014 Screener Proportion: '+proportiondesc+'</li>' 
+												  +'<li>'+'V6 Screener Proportion: '+v6proportiondesc+'</li>');
 					draw_chart(inputxy);
 				});
 			});
-					
+			
+			var polygon;
+			
+			$('#searchButton').click(function(){
+				var search_input = $('#searchinput').val();
+				$.getJSON(zipAPI + search_input + api_key, function(data) {
+						
+					if (polygon) {
+						map.removeLayer(polygon);
+					}
+					polygon = L.geoJson(data, { 
+						style: {
+						color: "#FF0000",
+						weight: 2,
+						opacity: 0.65
+					  }
+					});
+					layerGroup.addLayer(polygon);
+					layerGroup.addTo(map);
+				});
+			});
+			
+			$('#searchinput').keypress(function (e) {
+				 var key = e.which;
+				 if(key == 13)  // the enter key code
+				  {
+					$('#searchButton').click();
+					return false;  
+				  }
+			});   
+			
+			layer.on('featureOver', function(){
+				layerGroup.clearLayers();
+			});
+			
         }).on('error', function() {
           //log the error
         });
@@ -195,6 +266,20 @@
 
 <body onload="init()">
   <div id='cartodb-map'></div>
+  <div id='searchbox'>
+    <h4>Zip Code Search</h4>
+  	<form class="form-inline" role="form">
+      <div class="form-group">
+      	   <input class="form-control" id="searchinput" type="text">
+          <button type="button" class="btn btn-default btn-lg" id='searchButton'>
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          </button>
+       </div>
+    </form>
+  </div>
+ 
+  </div>
+  
   <div id="layer_toggle" class="cartodb-infobox">
       <ul>
         <li data="all" class="selected">V6 layer on/off</li>
