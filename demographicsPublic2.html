@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Demographic Map | ACCESS NYC| Mayor's Office of Operations
+        </title>
+
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+        <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+
+        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.14/themes/css/cartodb.css" type="text/css" />
+        <link rel="stylesheet" href="http://academy.cartodb.com/css/cdbui.css" type="text/css" />
+
+        <style type="text/css">
+            html, body, #map {
+                /*height: 100%;
+                padding: 0;
+                margin: 0;
+                width: 80%;
+                position: center;*/
+			  width: 100%;
+			  margin-left: auto ;
+			  margin-right: auto ;
+			  height: 100%;
+			  left:-10px;
+    			
+
+    			padding: 10px;
+            }
+            #cartocss {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            #ACS {
+                position: absolute;
+                top: 20px;
+                left: 40px;
+            }
+            .layer_selector {
+                background: rgba(255,255,255,0.9);
+                border-radius: 3.5px;
+                padding: 0;
+                border: 1px solid #999;
+                width: 250px;
+            }
+            
+            .layer_selector > p {
+                padding: 5px 5px;
+                border-bottom: 1px solid #999;
+				  font-size: 13px;
+            }
+            
+            .layer_selector ul {
+                padding: 0; margin: 0;
+                list-style-type: none;
+            }
+            .layer_selector li {
+                padding: 5px 5px;
+                font-family: Helvetica, Arial;
+                font-size: 11px;
+                color: #444;
+                cursor: pointer;
+            }
+            .layer_selector li:not(:last-child) {
+                border-bottom: 1px solid #999;
+            }
+            .layer_selector li:hover {
+                background-color: #F0F0F0;
+                cursor: pointer;
+            }
+            .layer_selector li.sql_selected,
+            .layer_selector li.cartocss_selected {
+                background-color: #A6CEE3;
+            }
+			
+			.sidebar {
+				  padding: 8px;
+				  position: absolute;
+				  right: 10px;
+				  bottom: 0px;
+				  z-index: 100;
+				  background: #ffffff;
+				  border-radius: 2px;
+				  color: #666;
+				  width: 500px;
+				  box-sizing: border-box;
+			}
+			
+			 #chartContainer {
+				  border-top: 1px dashed #504B9D;
+				  padding-top: 7px;
+				  margin-top: 9px;
+			}
+
+        </style>
+           
+        <style type="cartocss/html" id="veterans">
+				/** bubble visualization */
+
+		#v5andv6dems_merge{
+		  marker-fill-opacity: 0.9;
+		  marker-line-color: #FFF;
+		  marker-line-width: 1.5;
+		  marker-line-opacity: 1;
+		  marker-placement: point;
+		  marker-multi-policy: largest;
+		  marker-type: ellipse;
+		  marker-fill: #081B47;
+		  marker-allow-overlap: true;
+		  marker-clip: false;
+		}
+		#v5andv6dems_merge [ veteranind14 <= 22] {
+		   marker-width: 25.0;
+		}
+		#v5andv6dems_merge [ veteranind14 <= 21] {
+		   marker-width: 23.3;
+		}
+		#v5andv6dems_merge [ veteranind14 <= 17] {
+		   marker-width: 21.7;
+		}
+		#v5andv6dems_merge [ veteranind14 <= 15] {
+		   marker-width: 20.0;
+		}
+		#v5andv6dems_merge [ veteranind14 <= 11] {
+		   marker-width: 18.3;
+		}
+		#v5andv6dems_merge [ veteranind14 <= 9] {
+		   marker-width: 16.7;
+		}
+		#v5andv6dems_merge [ veteranind14 <= 7] {
+		   marker-width: 15.0;
+		}
+		#v5andv6dems_merge [ veteranind14 <= 5] {
+		   marker-width: 13.3;
+		}
+		#v5andv6dems_merge [ veteranind14 <= 3] {
+		   marker-width: 11.7;
+		}
+		#v5andv6dems_merge [ veteranind14 <= 1] {
+		   marker-width: 10.0;
+		}
+		</style>
+		<style type="cartocss/html" id="students">
+		/** bubble visualization */
+
+		/** bubble visualization */
+
+		#v5andv6dems_merge{
+		  marker-fill-opacity: 0.9;
+		  marker-line-color: #FFF;
+		  marker-line-width: 1.5;
+		  marker-line-opacity: 1;
+		  marker-placement: point;
+		  marker-multi-policy: largest;
+		  marker-type: ellipse;
+		  marker-fill: #FF9900;
+		  marker-allow-overlap: true;
+		  marker-clip: false;
+		}
+		#v5andv6dems_merge [ studentind14 <= 164] {
+		   marker-width: 25.0;
+		}
+		#v5andv6dems_merge [ studentind14 <= 121] {
+		   marker-width: 23.3;
+		}
+		#v5andv6dems_merge [ studentind14 <= 87] {
+		   marker-width: 21.7;
+		}
+		#v5andv6dems_merge [ studentind14 <= 69] {
+		   marker-width: 20.0;
+		}
+		#v5andv6dems_merge [ studentind14 <= 56] {
+		   marker-width: 18.3;
+		}
+		#v5andv6dems_merge [ studentind14 <= 47] {
+		   marker-width: 16.7;
+		}
+		#v5andv6dems_merge [ studentind14 <= 38] {
+		   marker-width: 15.0;
+		}
+		#v5andv6dems_merge [ studentind14 <= 24] {
+		   marker-width: 13.3;
+		}
+		#v5andv6dems_merge [ studentind14 <= 16] {
+		   marker-width: 11.7;
+		}
+		#v5andv6dems_merge [ studentind14 <= 7] {
+		   marker-width: 10.0;
+		}
+					
+		</style>
+		
+		<style type="cartocss/html" id="disabled">
+				/** bubble visualization */
+
+		#v5andv6dems_merge{
+		  marker-fill-opacity: 0.9;
+		  marker-line-color: #FFF;
+		  marker-line-width: 1.5;
+		  marker-line-opacity: 1;
+		  marker-placement: point;
+		  marker-multi-policy: largest;
+		  marker-type: ellipse;
+		  marker-fill: #41006D;
+		  marker-allow-overlap: true;
+		  marker-clip: false;
+		}
+		#v5andv6dems_merge [ disabledind14 <= 112] {
+		   marker-width: 25.0;
+		}
+		#v5andv6dems_merge [ disabledind14 <= 67.5] {
+		   marker-width: 23.3;
+		}
+		#v5andv6dems_merge [ disabledind14 <= 55.5] {
+		   marker-width: 21.7;
+		}
+		#v5andv6dems_merge [ disabledind14 <= 45.5] {
+		   marker-width: 20.0;
+		}
+		#v5andv6dems_merge [ disabledind14 <= 36.5] {
+		   marker-width: 18.3;
+		}
+		#v5andv6dems_merge [ disabledind14 <= 30.5] {
+		   marker-width: 16.7;
+		}
+		#v5andv6dems_merge [ disabledind14 <= 24.5] {
+		   marker-width: 15.0;
+		}
+		#v5andv6dems_merge [ disabledind14 <= 18.5] {
+		   marker-width: 13.3;
+		}
+		#v5andv6dems_merge [ disabledind14 <= 11.5] {
+		   marker-width: 11.7;
+		}
+		#v5andv6dems_merge [ disabledind14 <= 5.5] {
+		   marker-width: 10.0;
+		}
+
+		</style>	
+
+
+		<style type="cartocss/html" id="blind">
+
+#v5andv6dems_merge{
+  marker-fill-opacity: 0.9;
+  marker-line-color: #FFF;
+  marker-line-width: 1.5;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-fill: #F84F40;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#v5andv6dems_merge [ blindind14 <= 8] {
+   marker-width: 25.0;
+}
+#v5andv6dems_merge [ blindind14 <= 8] {
+   marker-width: 23.3;
+}
+#v5andv6dems_merge [ blindind14 <= 6] {
+   marker-width: 21.7;
+}
+#v5andv6dems_merge [ blindind14 <= 5] {
+   marker-width: 20.0;
+}
+#v5andv6dems_merge [ blindind14 <= 4] {
+   marker-width: 18.3;
+}
+#v5andv6dems_merge [ blindind14 <= 3.5] {
+   marker-width: 16.7;
+}
+#v5andv6dems_merge [ blindind14 <= 3] {
+   marker-width: 15.0;
+}
+#v5andv6dems_merge [ blindind14 <= 2] {
+   marker-width: 13.3;
+}
+#v5andv6dems_merge [ blindind14 <= 1] {
+   marker-width: 11.7;
+}
+#v5andv6dems_merge [ blindind14 <= 0] {
+   marker-width: 10.0;
+}
+					
+		</style>
+		
+		<style type="cartocss/html" id="unemployed">
+				/** bubble visualization */
+
+#v5andv6dems_merge{
+  marker-fill-opacity: 0.9;
+  marker-line-color: #FFF;
+  marker-line-width: 1.5;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-fill: #5CA2D1;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#v5andv6dems_merge [ _14_isunemployed <= 594] {
+   marker-width: 25.0;
+}
+#v5andv6dems_merge [ _14_isunemployed <= 314] {
+   marker-width: 23.3;
+}
+#v5andv6dems_merge [ _14_isunemployed <= 240] {
+   marker-width: 21.7;
+}
+#v5andv6dems_merge [ _14_isunemployed <= 191] {
+   marker-width: 20.0;
+}
+#v5andv6dems_merge [ _14_isunemployed <= 154] {
+   marker-width: 18.3;
+}
+#v5andv6dems_merge [ _14_isunemployed <= 122.5] {
+   marker-width: 16.7;
+}
+#v5andv6dems_merge [ _14_isunemployed <= 100] {
+   marker-width: 15.0;
+}
+#v5andv6dems_merge [ _14_isunemployed <= 74] {
+   marker-width: 13.3;
+}
+#v5andv6dems_merge [ _14_isunemployed <= 50] {
+   marker-width: 11.7;
+}
+#v5andv6dems_merge [ _14_isunemployed <= 20] {
+   marker-width: 10.0;
+}
+
+		</style>	
+
+	<style type="cartocss/html" id="ACSmedianincome">
+
+		/** choropleth visualization */
+
+#acs_demographics_merge{
+  polygon-fill: #252525;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 230952] {
+   polygon-fill: #F7F7F7;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 97955] {
+   polygon-fill: #D9D9D9;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 78174] {
+   polygon-fill: #BDBDBD;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 63739] {
+   polygon-fill: #969696;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 55129] {
+   polygon-fill: #737373;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 44688] {
+   polygon-fill: #525252;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 35079] {
+   polygon-fill: #252525;
+}		
+
+</style>
+<style type="cartocss/html" id="ACSveterans">
+
+#acs_demographics_merge{
+  polygon-fill: #F7F7F7;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 3687] {
+   polygon-fill: #252525;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 1768] {
+   polygon-fill: #525252;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 1391] {
+   polygon-fill: #737373;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 1130] {
+   polygon-fill: #969696;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 931] {
+   polygon-fill: #BDBDBD;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 721] {
+   polygon-fill: #D9D9D9;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 434] {
+   polygon-fill: #F7F7F7;
+}
+
+</style>	
+
+<style type="cartocss/html" id="ACSfamilypoverty">
+/** choropleth visualization */
+
+#acs_demographics_merge{
+  polygon-fill: #F7F7F7;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+#acs_demographics_merge[ family_below_povert <= 7478] {
+   polygon-fill: #252525;
+}
+#acs_demographics_merge[ family_below_povert <= 3725.5] {
+   polygon-fill: #525252;
+}
+#acs_demographics_merge[ family_below_povert <= 2256] {
+   polygon-fill: #737373;
+}
+#acs_demographics_merge[ family_below_povert <= 1374.5] {
+   polygon-fill: #969696;
+}
+#acs_demographics_merge[ family_below_povert <= 866] {
+   polygon-fill: #BDBDBD;
+}
+#acs_demographics_merge[ family_below_povert <= 513] {
+   polygon-fill: #D9D9D9;
+}
+#acs_demographics_merge[ family_below_povert <= 211] {
+   polygon-fill: #F7F7F7;
+}	
+
+</style>
+
+<style type="cartocss/html" id="ACSunemploymentcount">
+/** choropleth visualization */
+
+/** choropleth visualization */
+
+#acs_demographics_merge{
+  polygon-fill: #F7F7F7;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+#acs_demographics_merge[ unemployed <= 7939] {
+   polygon-fill: #252525;
+}
+#acs_demographics_merge[ unemployed <= 4584] {
+   polygon-fill: #525252;
+}
+#acs_demographics_merge[ unemployed <= 3055] {
+   polygon-fill: #737373;
+}
+#acs_demographics_merge[ unemployed <= 2361] {
+   polygon-fill: #969696;
+}
+#acs_demographics_merge[ unemployed <= 1784] {
+   polygon-fill: #BDBDBD;
+}
+#acs_demographics_merge[ unemployed <= 1138] {
+   polygon-fill: #D9D9D9;
+}
+#acs_demographics_merge[ unemployed <= 644] {
+   polygon-fill: #F7F7F7;
+}
+
+</style>
+
+<style type="cartocss/html" id="ACSlessthanten">
+/** choropleth visualization */
+
+#acs_demographics_merge{
+  polygon-fill: #F7F7F7;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 6423] {
+   polygon-fill: #252525;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 3548] {
+   polygon-fill: #525252;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 2227] {
+   polygon-fill: #737373;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 1446] {
+   polygon-fill: #969696;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 1036] {
+   polygon-fill: #BDBDBD;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 632] {
+   polygon-fill: #D9D9D9;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 258] {
+   polygon-fill: #F7F7F7;
+}
+
+</style>
+
+<style type="cartocss/html" id="ACS65inpoverty">
+/** choropleth visualization */
+/** choropleth visualization */
+
+#acs_demographics_merge{
+  polygon-fill: #F7F7F7;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 5115] {
+   polygon-fill: #252525;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 1904] {
+   polygon-fill: #525252;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 1359] {
+   polygon-fill: #737373;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 866] {
+   polygon-fill: #969696;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 501] {
+   polygon-fill: #BDBDBD;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 346] {
+   polygon-fill: #D9D9D9;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 175] {
+   polygon-fill: #F7F7F7;
+}
+
+</style>
+
+
+			
+    </head>
+    <body>
+        <div id="map"></div>
+		<div id="cartocss" class="layer_selector">
+			<p>ACCESS Selector Count, 2014</p>
+
+			<div class='cartodb-legend bubble', style="bottom:-120px">	
+           <div class="legend-title">ACCESS</div>
+			<div class="legend-title" id="legendACCESS">2014 Veteran Count</div>
+			<ul>
+				<li id="minACCESS">
+				min
+				</li>
+				<li class="graph" style="background: rgb(248, 79, 64);">
+					<div class="bubbles"></div>
+				</li>
+				<li id="maxACCESS">
+				max
+				</li>
+			</ul>
+			</div>
+
+				<li data="veterans" data-type="cartocss">2014 Veteran Count
+				</li>
+				<li data="students" data-type="cartocss">2014 Student Count
+				</li>
+				<li data="disabled" data-type="cartocss">2014 Disabled Count
+				</li>
+				<li data="blind" data-type="cartocss">2014 Blind Count
+				</li>
+				<li data="unemployed" data-type="cartocss">2014 Unemployed Count
+				</li>
+			</ul>
+		</div>
+		<div id="ACS" class="layer_selector">
+					<p>ACS Selectors</p>
+
+					<div class='cartodb-legend choropleth' style="bottom:-150px; right:5px">
+                  <div class="legend-title">ACS</div>
+                  <div class="legend-title" id="legendACS">Median Income</div>  
+						<ul>
+							<li class="min" id="minACS">
+								min
+							</li>
+							<li class="max" id="maxACS">
+								max
+							</li>
+							<li class="graph count_441">
+							<div class="colors">
+							<div class="quartile" style="background-color:#F7F7F7"></div>
+							<div class="quartile" style="background-color:#D9D9D9"></div>
+							<div class="quartile" style="background-color:#BDBDBD"></div>
+							<div class="quartile" style="background-color:#969696"></div>
+							<div class="quartile" style="background-color:#737373"></div>
+							<div class="quartile" style="background-color:#525252"></div>
+							<div class="quartile" style="background-color:#252525"></div>
+							</div>
+							</li>
+						</ul>
+						</div>
+					<ul>
+
+
+
+					<ul>
+						<li data="ACSmedianincome" data-type="cartocss">Median Income
+						</li>
+						<li data="ACSveterans" data-type="cartocss">Veterans
+						</li>
+						<li data="ACSfamilypoverty" data-type="cartocss">Families Below Poverty
+						</li>
+						<li data="ACSunemploymentcount">Unemployed Count
+						</li>
+						<li data="ACSlessthanten" data-type="cartocss">Households with income less than $10,000</li>
+						</li>
+						<li data="ACS65inpoverty" data-type="cartocss">Seniors (age 65 and up) in Poverty</li>
+					</ul>
+				</div>
+        <!-- include cartodb.js library -->
+        <script src="http://libs.cartocdn.com/cartodb.js/v3/3.14/cartodb.js" type="text/javascript"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+        <!-- Place your code in the script tags below -->
+        <script type="text/javascript">
+		// load visualization library from google
+		     
+			  google.load('visualization', '1.0', {'packages':['corechart']});
+			  function draw_chart(data,title) {
+				 var data = google.visualization.arrayToDataTable([
+					['Year', title],
+					['2007',  data[0]],
+					['2008',  data[1]],
+					['2009',  data[2]],
+					['2010',  data[3]],
+					 ['2011', data[4]],
+					 ['2012', data[5]],
+					 ['2013', data[6]],
+					 ['2014', data[7]],
+					 ['2015', data[8]]
+				 ]);
+				  var options = {
+					title: title,
+					legend: { position: "none" },
+					  width: 500,
+					  vAxis: {title: "Count"},
+					  hAxis: {title: "Year"}
+				  };
+				  var chart = new google.visualization.LineChart(document.getElementById('countGraph'));
+				  chart.draw(data, options);
+			  }
+	    
+			window.onload = function () {
+				var tableName = "v5andv6dems_merge";
+				var layerURL = 'https://kb2249.cartodb.com/api/v2/viz/93dd1642-251b-11e5-b7ba-0e9d821ea90d/viz.json';
+				
+				// Put layer data into a JS object
+				var layerSource = {
+						user_name: 'kb2249', 
+						type: 'cartodb',
+						sublayers: [{
+
+							sql: "SELECT * FROM acs_demographics_merge WHERE population > 500", //
+							cartocss: $("#ACSveterans").html() // default
+						},
+						{ 
+							sql: "SELECT * FROM " + tableName, //
+							cartocss: $("#veterans").html() // default
+						}]
+					}
+				
+				// Create layer selector
+				function createSelector(layer) {
+					var cartocss = "";
+					var $options = $("#cartocss").find("li");
+					$options.click(function(e) {
+						var $li = $(e.target);
+						var selected = $li.attr('data');
+
+						$options.removeClass('cartocss_selected');
+						$li.addClass('cartocss_selected');
+
+						cartocss = $('#'+selected).text();
+
+						layer.setCartoCSS(cartocss);
+						var minvalue;
+						var maxvalue;
+						var legend_desc;
+						if ( selected == 'students' ) {
+							minvalue = 7;
+							maxvalue = 164;
+							legend_desc = '2014 Students Count';
+						} else if ( selected == 'disabled' ) {
+							minvalue = 5.5;
+							maxvalue = 112;
+							legend_desc = '2014 Disabled Count';
+						} else if ( selected == 'blind' ) {
+							minvalue = 0;
+							maxvalue = 8;
+							legend_desc = '2014 Blind Count';
+						} else if ( selected == 'unemployed' ) {
+							minvalue = 24;
+							maxvalue = 594;
+							legend_desc = '2014 Unemployed Count';
+						} else {
+							minvalue = 1;
+							maxvalue = 22;
+							legend_desc = '2014 Veteran Count';
+						}
+						
+						$('#minACCESS').html(minvalue);
+						$('#maxACCESS').html(maxvalue);
+						$('#legendACCESS').html(legend_desc);
+					});
+				}
+
+				function createAcsSelector(layer) {
+					var cartocss = "";
+					var $options = $("#ACS").find("li");
+					$options.click(function(e) {
+						var $li = $(e.target);
+						var selected = $li.attr('data');
+
+						$options.removeClass('cartocss_selected');
+						$li.addClass('cartocss_selected');
+
+						cartocss = $('#'+selected).text();
+
+						layer.setCartoCSS(cartocss);
+						var minvalue;
+						var maxvalue;
+						var legend_desc;
+						if ( selected == 'ACSveterans' ) {
+							minvalue = 484;
+							maxvalue = 3687;
+							legend_desc = 'Veteran Count';
+						} else if ( selected == 'ACSfamilypoverty' ) {
+							minvalue = 250.50;
+							maxvalue = 7478;
+							legend_desc = 'Family in Poverty Count';
+						} else if ( selected == 'ACSunemploymentcount' ) {
+							minvalue = 866;
+							maxvalue = 7939;
+							legend_desc = 'Unemployment Count';
+						} else if ( selected == 'ACSlessthanten' ) {
+							minvalue = 342;
+							maxvalue = 6423;
+							legend_desc = 'Household with income < $10,000';
+						} else if ( selected == 'ACS65inpoverty' ) {
+							minvalue = 205;
+							maxvalue = 5115;
+							legend_desc = 'Senior over 65 and in poverty';
+						} else {
+							minvalue = '$34,568';
+							maxvalue = '$230,592';
+							legend_desc = 'Median Income';
+						}
+						$('#minACS').html(minvalue);
+						$('#maxACS').html(maxvalue);
+						$('#legendACS').html(legend_desc);
+					});
+				}
+
+
+
+					// Instantiate new map object, place it in 'map' element
+					var map_object = new L.Map('map', {
+						center: [40.7127,-74.0059], // NYC
+						zoom: 11
+					});
+
+					L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+						attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+					}).addTo(map_object);
+					// For storing the sublayer
+					var AccessSublayer;
+					var AcsSublayer
+					// Add data layer to your map
+					cartodb.createLayer(map_object,layerURL,{legends:false,cartodb_logo:false})
+						.addTo(map_object)
+						.done(function(layer) {
+							AccessSublayer = layer.getSubLayer(1);
+							AcsSublayer = layer.getSubLayer(0);
+							layer.getSubLayer(2).hide();
+							
+							createAcsSelector(AcsSublayer);
+							createSelector(AccessSublayer);
+							
+							layer.on('featureClick', function(ev, pos, latlng, data){
+								var cartodb_id = data.cartodb_id;
+								
+								var baseAPI = 'http://kb2249.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM v5andv6dems_merge WHERE population>4000 AND cartodb_id =';
+								$.getJSON(baseAPI + cartodb_id, function(res) {
+									
+									var $option = $("#cartocss").find("li.cartocss_selected");
+									var selected = $option.attr('data');
+									
+									var inputxy;
+									var titlename;
+									
+									if ( selected == 'students' ) {
+										inputxy = [res.features[0].properties.studentind_07,
+													res.features[0].properties.studentind08,
+													res.features[0].properties.studentind9,
+													res.features[0].properties.studentind10,
+													res.features[0].properties.studentind11,
+													res.features[0].properties.studentind12,
+													res.features[0].properties.studentind13,
+													res.features[0].properties.studentind14,
+													res.features[0].properties.student_2015];
+										titlename = 'Students';
+										
+									} else if ( selected == 'disabled' ) {
+										inputxy = [res.features[0].properties.disabledind_07,
+													res.features[0].properties.disabledind8,
+													res.features[0].properties.disabledind9,
+													res.features[0].properties.disabledind10,
+													res.features[0].properties.disabledind11,
+													res.features[0].properties.disabledind12,
+													res.features[0].properties.disabledind13,
+													res.features[0].properties.disabledind14,
+													res.features[0].properties.disabled_2015];
+										titlename = 'Disabled';
+										
+									} else if ( selected == 'blind' ) {
+										inputxy = [res.features[0].properties.blindind_07,
+													res.features[0].properties.blindind8,
+													res.features[0].properties.blindind9,
+													res.features[0].properties.blindind10,
+													res.features[0].properties.blindind11,
+													res.features[0].properties.blindind12,
+													res.features[0].properties.blindind13,
+													res.features[0].properties.blindind14,
+													res.features[0].properties.blind_2015];
+										titlename = 'Blind';
+										
+									} else if ( selected == 'unemployed' ) {
+										inputxy = [res.features[0].properties._07_isunemployed,
+													res.features[0].properties._08_isunemployed_x,
+													res.features[0].properties._09_isunemployed_x,
+													res.features[0].properties._10_isunemployed_x,
+													res.features[0].properties._11_isunemployed_x,
+													res.features[0].properties._12_isunemployed_x,
+													res.features[0].properties._13_isunemployed_x,
+													res.features[0].properties._14_isunemployed,
+													res.features[0].properties.unemployed2015];
+										titlename = 'Unemployed';
+										
+									} else {
+										inputxy = [res.features[0].properties.veteranind_07,
+													res.features[0].properties.veteranind08,
+													res.features[0].properties.veteranind9,
+													res.features[0].properties.veteranind10,
+													res.features[0].properties.veteranind11,
+													res.features[0].properties.veteranind12,
+													res.features[0].properties.veteranind13,
+													res.features[0].properties.veteranind14,
+													res.features[0].properties.veteranind_15];
+										titlename = 'Veteran';
+									}
+									draw_chart(inputxy,titlename);
+								});
+								
+							});
+							
+						})
+						.error(function(err) {
+							console.log("error: " + err);
+						});
+			}
+	</script>
+        <div class='sidebar mainSidebar'>
+            <h4 class='Description'>ACCESS Demographics Count by Year</h4>
+            <div id="chartContainer">
+               <div id="countDetails"></div>
+                <div id="countGraph"></div> 
+            </div>
+        </div>
+    </body>
+</html>
