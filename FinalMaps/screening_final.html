@@ -1,0 +1,334 @@
+
+<html>
+<head>
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.12/themes/css/cartodb.css" />
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script src="http://libs.cartocdn.com/cartodb.js/v3/3.12/cartodb.js"></script>
+  
+  <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.ie.css" />
+  <![endif]-->
+  <style>
+    html, body {width:100%; height:100%; padding: 0; margin: 0;}
+    #cartodb-map { width: 100%; height:100%; background: black;}
+	
+	.sidebar {
+      padding: 16px;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      z-index: 100;
+      background: #ffffff;
+      border-radius: 4px;
+      color: #666;
+      width: 500px;
+      box-sizing: border-box;
+    }
+	
+	.sidebar h4 {
+      margin: 0 0 10px 0;
+      font-size:16px;
+    }
+	
+	 #chartContainer {
+      border-top: 1px dashed #504B9D;
+      padding-top: 7px;
+      margin-top: 9px;
+    }
+
+	#screenerGraph{
+		text-align: right;
+		font-weight: bold;
+		font-size: 8px;
+   }
+
+	div.cartodb-popup.v2 {width:600px; }
+	div.cartodb-popup.v2 div.cartodb-popup-content-wrapper {
+		 height: auto;
+	}
+	div.cartodb-popup.v2 div.cartodb-popup-content {
+		height: auto;
+    }
+	#searchbox{
+		position: absolute;
+		top: 65px;
+		left: 20px;
+		padding: 0;
+		color: #FFF;
+	 }
+	 
+	#layer_toggle{
+		position: absolute;
+		top: 145px;
+		left: 20px;
+		padding: 0;
+	 }
+	 #layer_toggle ul {
+		padding: 0; margin: 0;
+		list-style-type: none;
+	 }
+	 #layer_toggle li {
+		border-bottom: 1px solid #999;
+		padding: 15px 30px;
+		font-family: "Helvetica", Arial;
+		font-size: 13px;
+		color: #444;
+		cursor: auto;
+	  }
+	  #layer_toggle li:hover {
+		background-color: #F0F0F0;
+		cursor: pointer;
+	  }
+
+	  #layer_toggle li.selected {
+		background-color: #EEE;
+	  }
+
+  </style>
+  
+  <script type="infowindow/html" id="infowindow_template">
+    <div class="cartodb-popup v2">
+       <a href="#close" class="cartodb-popup-close-button close">x</a>
+       <div class="cartodb-popup-content-wrapper">
+         <div class="cartodb-popup-content">
+         <!-- content.data contains the field info -->
+		    <div class="legend-labels">
+			 <li>Zip code: {{content.data.zipcode}}</li>
+			 <li>Population: {{content.data.population}}</li>
+			 <li>2014 Percentage of population: {{content.data._14_propx1000}}</li>
+			 </div>
+			 <div id="chart_div">
+			   <script>
+			      draw_chart([{{content.data._2007_screener_count}},{{content.data._2008_screener_count}},{{content.data._2009_screener_count}},{{content.data._2010_screener_count}},{{content.data._2011_screener_count}},{{content.data._2012_screener_count}},{{content.data._2013_screener_count}},{{content.data._2014_screener_count}}]);
+			   </script>
+            </div>
+         </div>
+      </div>
+     <div class="cartodb-popup-tip-container"></div>
+   </div>
+  </script>
+
+  <script>
+  	  var currentZip;
+  // load visualization library from google
+      google.load('visualization', '1.0', {'packages':['corechart']});
+      function draw_chart(data) {
+         var data = google.visualization.arrayToDataTable([
+            ['Year', 'Screenings'],
+            ['2007',  data[0]],
+            ['2008',  data[1]],
+            ['2009',  data[2]],
+            ['2010',  data[3]],
+			  ['2011', data[4]],
+			  ['2012', data[5]],
+			  ['2013', data[6]],
+			  ['2014', data[7]],
+			  ['2015', data[8]]
+			  
+         ]);
+          var options = {
+            title: 'Screeners',
+            legend: { position: "none" },
+			  width: 500,
+			  vAxis: {title: "Count"},
+			  hAxis: {title: "Year"}
+          };
+          var chart = new google.visualization.LineChart(document.getElementById('screenerGraph'));
+          chart.draw(data, options);
+      }
+	    
+     var map;
+	 var baseAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM kellyaccess.v5v6zipcounts_merge WHERE _14_percent IS NOT NULL AND total_population > 5000 AND cartodb_id =" 
+	 var medianIncomeBaseAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT DISTINCT * FROM kellyaccess.medianhouseholdincome_acswithrockaways_merge WHERE population >50 AND median_household_income_occupied_housing_units IS NOT null AND zip ="
+	 
+	 var v6BaseAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM kellyaccess.v6mergedproportion WHERE v6_proportion_x_1000 IS NOT null AND total_population_as_per_acs > 5000 AND cartodb_id ="
+	 
+	 var zipAPI = "http://kellyaccess.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM kellyaccess.v5v6zipcounts_merge WHERE _14_percent IS NOT NULL AND total_population > 5000 AND zipcode =" 
+	 
+	 var api_key = "&api_key=f5c184857a5f11b2bd0b87e7c4272d41cc099eec"
+	
+	var layerGroup = new L.LayerGroup();
+	
+    function init(){
+      // initiate leaflet map
+      map = new L.Map('cartodb-map', { 
+        center: [40.7, -73.8],
+        zoom: 11
+      })
+
+      map.scrollWheelZoom.disable();
+
+ L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+						attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      var layerUrl = 'https://hhsaccelerator.cartodb.com/u/kellyaccess/api/v2/viz/02cb8162-112e-11e5-95ee-0e018d66dc29/viz.json';
+
+      // change the query for the first layer
+//      var subLayerOptions = {
+//        sql: "SELECT * FROM example_cartodbjs_1 where adm0_a3 = 'USA'",
+//        cartocss: "#example_cartodbjs_1{marker-fill: #109DCD; marker-width: 5; marker-line-color: white; marker-line-width: 0;}"
+//      }
+
+      cartodb.createLayer(map, layerUrl, {layerSelector:false, searchbox:true})
+        .addTo(map)
+        .on('done', function(layer) {
+//          layer.getSubLayer(0).set(subLayerOptions);
+		   
+		   var sublayerv6 = layer.getSubLayer(1);
+		   sublayerv6.hide();
+		   layer.getSubLayer(3).hide();
+		   
+		   var sublayer = layer.getSubLayer(2);
+		   layer.setInteraction(true);
+ // 		   sublayer.infowindow.set('template', $('#infowindow_template').html());
+		   var v6_toggle = $('#layer_toggle li');
+		   var v6_clicked = true;
+			v6_toggle.click (function(e){
+				if(!v6_clicked) {
+						sublayerv6.hide()
+						v6_clicked = true;
+					}
+					else {
+						sublayerv6.show()
+						v6_clicked = false;				
+					}
+			});
+			
+			$('#layer_toggle').hide();
+			
+			layer.on('featureClick', function(ev, pos, latlng, data){
+				var cartodb_id = data.cartodb_id;
+				
+//				var zipcodedesc;
+//				var populationdesc;
+//				var proportiondesc;
+					
+//				var medianincomedesc;
+//				var v6proportiondesc;
+//				var inputxy;
+				
+				$("#screenerDetails").empty();
+				$("#screenerGraph").empty();
+				
+/*				$.getJSON(medianIncomeBaseAPI + cartodb_id + api_key, function(res2) {
+					if ( res2.features[0] != [] ) {
+						medianincomedesc = res2.features[0].properties.median_household_income_occupied_housing_units; 
+					} 	else {
+						medianincomedesc = 'Connection error: Cannot retrieve the data';
+					};
+				});*/
+				
+//				$.getJSON(v6BaseAPI + cartodb_id + api_key, function(res3) {
+//					v6proportiondesc = res3.features[0].properties.v6_proportion_of_pop_that_screened;
+//				});
+				
+            	$.getJSON(baseAPI + cartodb_id + api_key, function(res) {
+					
+					var inputxy = [res.features[0].properties._2007_count,
+								res.features[0].properties._2008_count,
+								res.features[0].properties._2009_count,
+								res.features[0].properties._2010_count,
+								res.features[0].properties._2011_count,
+								res.features[0].properties._2012_count,
+								res.features[0].properties._2013_count,
+								res.features[0].properties._2014_count,
+								res.features[0].properties._2015_v5v6];
+					var zipcodedesc = res.features[0].properties.zipcode;
+					var populationdesc = res.features[0].properties.population;
+					var proportiondesc = res.features[0].properties._14_percent;
+					
+					var medianincomedesc;
+					
+					$.getJSON(medianIncomeBaseAPI + zipcodedesc + api_key, function(res2) {
+						if ( res2.features[0] != [] ) {
+							var medianincome = res2.features[0].properties.median_household_income_occupied_housing_units;
+							medianincomedesc = medianincome
+						} 	else {
+							medianincomedesc = 'Connection error: Cannot retrieve the data';
+						};
+					
+					
+						$("#screenerDetails").append('<li>'+'Zipcode: '+zipcodedesc+'</li>'
+												  +'<li>'+'Median Income: '+medianincomedesc+'</li>'
+					                           +'<li>'+'Population: '+populationdesc+'</li>'
+											      +'<li>'+'2014 Percentage Screened: '+proportiondesc+'</li>');
+												  
+						draw_chart(inputxy);
+					});
+				});
+			});
+			
+			var polygon;
+			
+			$('#searchButton').click(function(){
+				var search_input = $('#searchinput').val();
+				$.getJSON(zipAPI + search_input + api_key, function(data) {
+						
+					if (polygon) {
+						map.removeLayer(polygon);
+					}
+					polygon = L.geoJson(data, { 
+						style: {
+						color: "#FF0000",
+						weight: 2,
+						opacity: 0.65
+					  }
+					});
+					layerGroup.addLayer(polygon);
+					layerGroup.addTo(map);
+				});
+			});
+			
+			$('#searchinput').keypress(function (e) {
+				 var key = e.which;
+				 if(key == 13)  // the enter key code
+				  {
+					$('#searchButton').click();
+					return false;  
+				  }
+			});   
+			
+			layer.on('featureOver', function(){
+				layerGroup.clearLayers();
+			});
+			
+        }).on('error', function() {
+          //log the error
+        });
+    }  
+  </script>
+</head>
+
+<body onload="init()">
+  <div id='cartodb-map'></div>
+  <div id='searchbox'>
+    <h4>Zip Code Search</h4>
+  	<form class="form-inline" role="form">
+      <div class="form-group">
+      	   <input class="form-control" id="searchinput" type="text">
+          <button type="button" class="btn btn-default btn-lg" id='searchButton'>
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          </button>
+       </div>
+    </form>
+  </div>
+ 
+  </div>
+  
+  <div id="layer_toggle" class="cartodb-infobox">
+      <ul>
+        <li data="all" class="selected">V6 layer on/off</li>
+      </ul>
+  </div>
+  
+  <div class='sidebar mainSidebar'>
+    <h4 class='Description'>Click over the zipcode to see the data</h4>
+    <div id="chartContainer">
+       <div id="screenerDetails"></div>
+    	<div id="screenerGraph"></div> 
+    </div>
+  </div>
+</body>
+</html>

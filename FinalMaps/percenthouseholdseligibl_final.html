@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Eligibility Map | ACCESS NYC | Mayor's Office of Operations
+        </title>
+
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+        <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+
+        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.14/themes/css/cartodb.css" type="text/css" />
+        <link rel="stylesheet" href="http://academy.cartodb.com/css/cdbui.css" type="text/css" />
+
+        <style type="text/css">
+            html, body, #map {
+                width: 100% ;
+                margin-left: auto ;
+                margin-right: auto ;
+                height: 100%;
+                left:-10px;
+                padding: 10px;
+            }
+            #cartocss {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            #ACS {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+            }
+            .layer_selector {
+                background: rgba(255,255,255,0.9);
+                border-radius: 5px;
+                padding: 0;
+                border: 1px solid #999;
+                width: 300px;
+            }
+            
+            .layer_selector > p {
+                padding: 15px 30px;
+                border-bottom: 1px solid #999;
+            }
+            
+            .layer_selector ul {
+                padding: 0; margin: 0;
+                list-style-type: none;
+            }
+            .layer_selector li {
+                padding: 8px 10px;
+                font-family: Helvetica, Arial;
+                font-size: 11px;
+                color: #444;
+                cursor: pointer;
+            }
+            .layer_selector li:not(:last-child) {
+                border-bottom: 1px solid #999;
+            }
+            .layer_selector li:hover {
+                background-color: #F0F0F0;
+                cursor: pointer;
+            }
+            .layer_selector li.sql_selected,
+            .layer_selector li.cartocss_selected {
+                background-color: #A6CEE3;
+            }
+			
+			 .sidebar {
+				  padding: 8px;
+				  position: absolute;
+				  left: 10px;
+				  bottom: 0px;
+				  z-index: 100;
+				  background: #ffffff;
+				  border-radius: 2px;
+				  color: #666;
+				  width: 500px;
+				  box-sizing: border-box;
+			}
+			
+			 #chartContainer {
+				  border-top: 1px dashed #504B9D;
+				  padding-top: 7px;
+				  margin-top: 9px;
+			}
+
+        </style>
+           
+        <style type="cartocss/html" id="Sect8">
+			/** bubble visualization */
+
+/** bubble visualization */
+
+#zipprogramwithv6_aggregated_merge{
+  marker-fill-opacity: 0.9;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-fill: #B81609;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#zipprogramwithv6_aggregated_merge [ sect8_percent <= 71.4908456843941] {
+   marker-width: 25.0;
+}
+#zipprogramwithv6_aggregated_merge [ sect8_percent <= 58.3946980854197] {
+   marker-width: 23.3;
+}
+#zipprogramwithv6_aggregated_merge [ sect8_percent <= 56.6555183946488] {
+   marker-width: 21.7;
+}
+#zipprogramwithv6_aggregated_merge [ sect8_percent <= 55.5276381909548] {
+   marker-width: 20.0;
+}
+#zipprogramwithv6_aggregated_merge [ sect8_percent <= 54.7404063205418] {
+   marker-width: 18.3;
+}
+#zipprogramwithv6_aggregated_merge [ sect8_percent <= 53.921568627451] {
+   marker-width: 16.7;
+}
+#zipprogramwithv6_aggregated_merge [ sect8_percent <= 53.3219761499148] {
+   marker-width: 15.0;
+}
+#zipprogramwithv6_aggregated_merge [ sect8_percent <= 52.5974025974026] {
+   marker-width: 13.3;
+}
+#zipprogramwithv6_aggregated_merge [ sect8_percent <= 51.0584250635055] {
+   marker-width: 11.7;
+}
+#zipprogramwithv6_aggregated_merge [ sect8_percent <= 49.438202247191] {
+   marker-width: 10.0;
+}
+		</style>
+		<style type="cartocss/html" id="DRIE">
+		/** bubble visualization */
+
+/** bubble visualization */
+
+#zipprogramwithv6_aggregated_merge{
+  marker-fill-opacity: 0.9;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-fill: #F84F40;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#zipprogramwithv6_aggregated_merge [ drie_percent <= 10.8695652173913] {
+   marker-width: 25.0;
+}
+#zipprogramwithv6_aggregated_merge [ drie_percent <= 3.7344398340249] {
+   marker-width: 23.3;
+}
+#zipprogramwithv6_aggregated_merge [ drie_percent <= 2.82131661442006] {
+   marker-width: 21.7;
+}
+#zipprogramwithv6_aggregated_merge [ drie_percent <= 2.4822695035461] {
+   marker-width: 20.0;
+}
+#zipprogramwithv6_aggregated_merge [ drie_percent <= 2.04520990312164] {
+   marker-width: 18.3;
+}
+#zipprogramwithv6_aggregated_merge [ drie_percent <= 1.76565008025682] {
+   marker-width: 16.7;
+}
+#zipprogramwithv6_aggregated_merge [ drie_percent <= 1.49812734082397] {
+   marker-width: 15.0;
+}
+#zipprogramwithv6_aggregated_merge [ drie_percent <= 1.15606936416185] {
+   marker-width: 13.3;
+}
+#zipprogramwithv6_aggregated_merge [ drie_percent <= 0.929152148664344] {
+   marker-width: 11.7;
+}
+#zipprogramwithv6_aggregated_merge [ drie_percent <= 0.481540930979133] {
+   marker-width: 10.0;
+}
+		</style>
+		
+	<style type="cartocss/html" id="SCRIE">
+/** bubble visualization */
+
+/** bubble visualization */
+
+#zipprogramwithv6_aggregated_merge{
+  marker-fill-opacity: 0.9;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-fill: #41006D;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#zipprogramwithv6_aggregated_merge [ scrie_percent <= 41.7525773195876] {
+   marker-width: 25.0;
+}
+#zipprogramwithv6_aggregated_merge [ scrie_percent <= 6.60377358490566] {
+   marker-width: 23.3;
+}
+#zipprogramwithv6_aggregated_merge [ scrie_percent <= 3.21100917431193] {
+   marker-width: 21.7;
+}
+#zipprogramwithv6_aggregated_merge [ scrie_percent <= 2.22222222222222] {
+   marker-width: 20.0;
+}
+#zipprogramwithv6_aggregated_merge [ scrie_percent <= 1.82370820668693] {
+   marker-width: 18.3;
+}
+#zipprogramwithv6_aggregated_merge [ scrie_percent <= 1.34453781512605] {
+   marker-width: 16.7;
+}
+#zipprogramwithv6_aggregated_merge [ scrie_percent <= 1.03448275862069] {
+   marker-width: 15.0;
+}
+#zipprogramwithv6_aggregated_merge [ scrie_percent <= 0.796812749003984] {
+   marker-width: 13.3;
+}
+#zipprogramwithv6_aggregated_merge [ scrie_percent <= 0.565770862800566] {
+   marker-width: 11.7;
+}
+#zipprogramwithv6_aggregated_merge [ scrie_percent <= 0.322997416020672] {
+   marker-width: 10.0;
+}
+					
+		</style>
+		
+		<style type="cartocss/html" id="CA">
+			/** bubble visualization */
+
+/** bubble visualization */
+
+#zipprogramwithv6_aggregated_merge{
+  marker-fill-opacity: 0.9;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-fill: #7B00B4;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#zipprogramwithv6_aggregated_merge [ cashassist_percent <= 71.4285714285714] {
+   marker-width: 25.0;
+}
+#zipprogramwithv6_aggregated_merge [ cashassist_percent <= 57.8125] {
+   marker-width: 23.3;
+}
+#zipprogramwithv6_aggregated_merge [ cashassist_percent <= 55.7264957264957] {
+   marker-width: 21.7;
+}
+#zipprogramwithv6_aggregated_merge [ cashassist_percent <= 54.5454545454545] {
+   marker-width: 20.0;
+}
+#zipprogramwithv6_aggregated_merge [ cashassist_percent <= 53.6144578313253] {
+   marker-width: 18.3;
+}
+#zipprogramwithv6_aggregated_merge [ cashassist_percent <= 52.7272727272727] {
+   marker-width: 16.7;
+}
+#zipprogramwithv6_aggregated_merge [ cashassist_percent <= 52.2033898305085] {
+   marker-width: 15.0;
+}
+#zipprogramwithv6_aggregated_merge [ cashassist_percent <= 51.5837104072398] {
+   marker-width: 13.3;
+}
+#zipprogramwithv6_aggregated_merge [ cashassist_percent <= 50.8756567425569] {
+   marker-width: 11.7;
+}
+#zipprogramwithv6_aggregated_merge [ cashassist_percent <= 49.1458607095926] {
+   marker-width: 10.0;
+}
+		</style>	
+
+		<style type="cartocss/html" id="CDCTC">
+			/** bubble visualization */
+
+/** bubble visualization */
+
+#zipprogramwithv6_aggregated_merge{
+  marker-fill-opacity: 0.9;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-fill: #081B47;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#zipprogramwithv6_aggregated_merge [ cdctaxcredit_percent <= 35.7142857142857] {
+   marker-width: 25.0;
+}
+#zipprogramwithv6_aggregated_merge [ cdctaxcredit_percent <= 10.6666666666667] {
+   marker-width: 23.3;
+}
+#zipprogramwithv6_aggregated_merge [ cdctaxcredit_percent <= 9.35412026726058] {
+   marker-width: 21.7;
+}
+#zipprogramwithv6_aggregated_merge [ cdctaxcredit_percent <= 8.81226053639847] {
+   marker-width: 20.0;
+}
+#zipprogramwithv6_aggregated_merge [ cdctaxcredit_percent <= 8.20224719101124] {
+   marker-width: 18.3;
+}
+#zipprogramwithv6_aggregated_merge [ cdctaxcredit_percent <= 7.905874556106675] {
+   marker-width: 16.7;
+}
+#zipprogramwithv6_aggregated_merge [ cdctaxcredit_percent <= 7.33532934131737] {
+   marker-width: 15.0;
+}
+#zipprogramwithv6_aggregated_merge [ cdctaxcredit_percent <= 6.66666666666667] {
+   marker-width: 13.3;
+}
+#zipprogramwithv6_aggregated_merge [ cdctaxcredit_percent <= 5.81818181818182] {
+   marker-width: 11.7;
+}
+#zipprogramwithv6_aggregated_merge [ cdctaxcredit_percent <= 4.27807486631016] {
+   marker-width: 10.0;
+}
+		</style>	
+
+				<style type="cartocss/html" id="CTC">
+			/** bubble visualization */
+
+/** bubble visualization */
+
+#zipprogramwithv6_aggregated_merge{
+  marker-fill-opacity: 0.9;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-fill: #2E5387;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#zipprogramwithv6_aggregated_merge [ childtaxcredit_percent <= 54.690618762475] {
+   marker-width: 25.0;
+}
+#zipprogramwithv6_aggregated_merge [ childtaxcredit_percent <= 27.6218611521418] {
+   marker-width: 23.3;
+}
+#zipprogramwithv6_aggregated_merge [ childtaxcredit_percent <= 26.2738853503185] {
+   marker-width: 21.7;
+}
+#zipprogramwithv6_aggregated_merge [ childtaxcredit_percent <= 25.201072386059] {
+   marker-width: 20.0;
+}
+#zipprogramwithv6_aggregated_merge [ childtaxcredit_percent <= 23.1511254019293] {
+   marker-width: 18.3;
+}
+#zipprogramwithv6_aggregated_merge [ childtaxcredit_percent <= 22.2222222222222] {
+   marker-width: 16.7;
+}
+#zipprogramwithv6_aggregated_merge [ childtaxcredit_percent <= 21.195652173913] {
+   marker-width: 15.0;
+}
+#zipprogramwithv6_aggregated_merge [ childtaxcredit_percent <= 19.9675324675325] {
+   marker-width: 13.3;
+}
+#zipprogramwithv6_aggregated_merge [ childtaxcredit_percent <= 17.9707652622528] {
+   marker-width: 11.7;
+}
+#zipprogramwithv6_aggregated_merge [ childtaxcredit_percent <= 14.1242937853107] {
+   marker-width: 10.0;
+}
+
+		</style>		
+
+						<style type="cartocss/html" id="EITC">
+			/** bubble visualization */
+
+/** bubble visualization */
+
+#zipprogramwithv6_aggregated_merge{
+  marker-fill-opacity: 0.9;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-fill: #5CA2D1;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#zipprogramwithv6_aggregated_merge [ eitc_percent <= 54.8755186721992] {
+   marker-width: 25.0;
+}
+#zipprogramwithv6_aggregated_merge [ eitc_percent <= 28.2051282051282] {
+   marker-width: 23.3;
+}
+#zipprogramwithv6_aggregated_merge [ eitc_percent <= 26.0204081632653] {
+   marker-width: 21.7;
+}
+#zipprogramwithv6_aggregated_merge [ eitc_percent <= 23.2049947970864] {
+   marker-width: 20.0;
+}
+#zipprogramwithv6_aggregated_merge [ eitc_percent <= 21.6161616161616] {
+   marker-width: 18.3;
+}
+#zipprogramwithv6_aggregated_merge [ eitc_percent <= 20.189701897019] {
+   marker-width: 16.7;
+}
+#zipprogramwithv6_aggregated_merge [ eitc_percent <= 19.0938511326861] {
+   marker-width: 15.0;
+}
+#zipprogramwithv6_aggregated_merge [ eitc_percent <= 17.4089068825911] {
+   marker-width: 13.3;
+}
+#zipprogramwithv6_aggregated_merge [ eitc_percent <= 16.3636363636364] {
+   marker-width: 11.7;
+}
+#zipprogramwithv6_aggregated_merge [ eitc_percent <= 14.6428571428571] {
+   marker-width: 10.0;
+}
+		</style>	
+
+								<style type="cartocss/html" id="SNAP">
+
+
+/** bubble visualization */
+
+#zipprogramwithv6_aggregated_merge{
+  marker-fill-opacity: 0.9;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-fill: #FF6600;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#zipprogramwithv6_aggregated_merge [ snap_percent <= 90] {
+   marker-width: 25.0;
+}
+#zipprogramwithv6_aggregated_merge [ snap_percent <= 82.6415094339623] {
+   marker-width: 23.3;
+}
+#zipprogramwithv6_aggregated_merge [ snap_percent <= 81.5013404825737] {
+   marker-width: 21.7;
+}
+#zipprogramwithv6_aggregated_merge [ snap_percent <= 80.7823129251701] {
+   marker-width: 20.0;
+}
+#zipprogramwithv6_aggregated_merge [ snap_percent <= 80.1136363636364] {
+   marker-width: 18.3;
+}
+#zipprogramwithv6_aggregated_merge [ snap_percent <= 79.40864243786685] {
+   marker-width: 16.7;
+}
+#zipprogramwithv6_aggregated_merge [ snap_percent <= 78.8095238095238] {
+   marker-width: 15.0;
+}
+#zipprogramwithv6_aggregated_merge [ snap_percent <= 78.0995475113122] {
+   marker-width: 13.3;
+}
+#zipprogramwithv6_aggregated_merge [ snap_percent <= 77.7952755905512] {
+   marker-width: 11.7;
+}
+#zipprogramwithv6_aggregated_merge [ snap_percent <= 76.6666666666667] {
+   marker-width: 10.0;
+}
+
+</style> 
+
+<style type="cartocss/html" id="SM">
+
+			/** bubble visualization */
+
+/** bubble visualization */
+
+#zipprogramwithv6_aggregated_merge{
+  marker-fill-opacity: 0.9;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-placement: point;
+  marker-multi-policy: largest;
+  marker-type: ellipse;
+  marker-fill: #FF9900;
+  marker-allow-overlap: true;
+  marker-clip: false;
+}
+#zipprogramwithv6_aggregated_merge [ schoolmeal_percent <= 50.37147102526] {
+   marker-width: 25.0;
+}
+#zipprogramwithv6_aggregated_merge [ schoolmeal_percent <= 19.5205479452055] {
+   marker-width: 23.3;
+}
+#zipprogramwithv6_aggregated_merge [ schoolmeal_percent <= 16.7130919220056] {
+   marker-width: 21.7;
+}
+#zipprogramwithv6_aggregated_merge [ schoolmeal_percent <= 15.3472222222222] {
+   marker-width: 20.0;
+}
+#zipprogramwithv6_aggregated_merge [ schoolmeal_percent <= 14.4136078782453] {
+   marker-width: 18.3;
+}
+#zipprogramwithv6_aggregated_merge [ schoolmeal_percent <= 13.2894736842105] {
+   marker-width: 16.7;
+}
+#zipprogramwithv6_aggregated_merge [ schoolmeal_percent <= 12.4137931034483] {
+   marker-width: 15.0;
+}
+#zipprogramwithv6_aggregated_merge [ schoolmeal_percent <= 11.2359550561798] {
+   marker-width: 13.3;
+}
+#zipprogramwithv6_aggregated_merge [ schoolmeal_percent <= 9.51417004048583] {
+   marker-width: 11.7;
+}
+#zipprogramwithv6_aggregated_merge [ schoolmeal_percent <= 7.95180722891566] {
+   marker-width: 10.0;
+}
+
+</style> 
+
+
+
+
+  <style type="cartocss/html" id="ACSmedianincome">
+
+    /** choropleth visualization */
+
+#acs_demographics_merge{
+  polygon-fill: #252525;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 230952] {
+   polygon-fill: #F7F7F7;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 97955] {
+   polygon-fill: #D9D9D9;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 78174] {
+   polygon-fill: #BDBDBD;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 63739] {
+   polygon-fill: #969696;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 55129] {
+   polygon-fill: #737373;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 44688] {
+   polygon-fill: #525252;
+}
+#acs_demographics_merge [ median_household_income_occupied_housing_units <= 35079] {
+   polygon-fill: #252525;
+}   
+
+</style>
+<style type="cartocss/html" id="ACSveterans">
+
+#acs_demographics_merge{
+  polygon-fill: #F7F7F7;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 3687] {
+   polygon-fill: #252525;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 1768] {
+   polygon-fill: #525252;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 1391] {
+   polygon-fill: #737373;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 1130] {
+   polygon-fill: #969696;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 931] {
+   polygon-fill: #BDBDBD;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 721] {
+   polygon-fill: #D9D9D9;
+}
+#acs_demographics_merge[ civilian_veterans_18_years_and_over <= 434] {
+   polygon-fill: #F7F7F7;
+}
+
+</style>  
+
+<style type="cartocss/html" id="ACSfamilypoverty">
+/** choropleth visualization */
+
+#acs_demographics_merge{
+  polygon-fill: #F7F7F7;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+#acs_demographics_merge[ family_below_povert <= 7478] {
+   polygon-fill: #252525;
+}
+#acs_demographics_merge[ family_below_povert <= 3725.5] {
+   polygon-fill: #525252;
+}
+#acs_demographics_merge[ family_below_povert <= 2256] {
+   polygon-fill: #737373;
+}
+#acs_demographics_merge[ family_below_povert <= 1374.5] {
+   polygon-fill: #969696;
+}
+#acs_demographics_merge[ family_below_povert <= 866] {
+   polygon-fill: #BDBDBD;
+}
+#acs_demographics_merge[ family_below_povert <= 513] {
+   polygon-fill: #D9D9D9;
+}
+#acs_demographics_merge[ family_below_povert <= 211] {
+   polygon-fill: #F7F7F7;
+} 
+
+</style>
+
+<style type="cartocss/html" id="ACSunemploymentcount">
+/** choropleth visualization */
+
+/** choropleth visualization */
+
+#acs_demographics_merge{
+  polygon-fill: #F7F7F7;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+#acs_demographics_merge[ unemployed <= 7939] {
+   polygon-fill: #252525;
+}
+#acs_demographics_merge[ unemployed <= 4584] {
+   polygon-fill: #525252;
+}
+#acs_demographics_merge[ unemployed <= 3055] {
+   polygon-fill: #737373;
+}
+#acs_demographics_merge[ unemployed <= 2361] {
+   polygon-fill: #969696;
+}
+#acs_demographics_merge[ unemployed <= 1784] {
+   polygon-fill: #BDBDBD;
+}
+#acs_demographics_merge[ unemployed <= 1138] {
+   polygon-fill: #D9D9D9;
+}
+#acs_demographics_merge[ unemployed <= 644] {
+   polygon-fill: #F7F7F7;
+}
+
+</style>
+
+<style type="cartocss/html" id="ACSlessthanten">
+/** choropleth visualization */
+
+#acs_demographics_merge{
+  polygon-fill: #F7F7F7;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 6423] {
+   polygon-fill: #252525;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 3548] {
+   polygon-fill: #525252;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 2227] {
+   polygon-fill: #737373;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 1446] {
+   polygon-fill: #969696;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 1036] {
+   polygon-fill: #BDBDBD;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 632] {
+   polygon-fill: #D9D9D9;
+}
+#acs_demographics_merge[ hh_less_than_10000 <= 258] {
+   polygon-fill: #F7F7F7;
+}
+
+</style>
+
+<style type="cartocss/html" id="ACS65inpoverty">
+/** choropleth visualization */
+/** choropleth visualization */
+
+#acs_demographics_merge{
+  polygon-fill: #F7F7F7;
+  polygon-opacity: 0.8;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 5115] {
+   polygon-fill: #252525;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 1904] {
+   polygon-fill: #525252;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 1359] {
+   polygon-fill: #737373;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 866] {
+   polygon-fill: #969696;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 501] {
+   polygon-fill: #BDBDBD;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 346] {
+   polygon-fill: #D9D9D9;
+}
+#acs_demographics_merge[ age_65_and_over_in_poverty <= 175] {
+   polygon-fill: #F7F7F7;
+}
+
+</style>
+
+			
+    </head>
+    <body>
+        <div id="map"></div>
+		<div id="cartocss" class="layer_selector">
+			<p>Percent of Households Eligibile for Benefit They Screened For</p>
+
+
+<div class='cartodb-legend bubble', style="bottom:-120px"> 
+<div class="legend-title" id='legendCount'>SECT8 Percentage</div>
+<ul>
+  <li id='minCount'>
+  49.44%
+  </li>
+  <li class="graph" style="background: #B81609;;">
+    <div class="bubbles"></div>
+  </li>
+  <li id='maxCount'>
+  71.49%
+  </li>
+</ul>
+</div>
+			<ul>
+				<li data="Sect8" data-type="cartocss">Section 8 Housing 
+				</li>
+				<li data="DRIE" data-type="cartocss">DRIE
+				</li>
+				<li data="SCRIE" data-type="cartocss">SCRIE
+				</li>
+				<li data="CA" data-type="cartocss">Cash Assistance
+				</li>
+				<li data="CDCTC" data-type="cartocss">Child and Dependent Care Tax Credit
+				</li>
+				</li>
+				<li data="CTC" data-type="cartocss">Child Tax Credit
+				</li>
+				</li>
+				<li data="EITC" data-type="cartocss">EITC
+				</li>
+				</li>
+				<li data="SNAP" data-type="cartocss">SNAP
+				</li>
+				</li>
+				<li data="SM" data-type="cartocss">School Meals
+				</li>
+			</ul>
+		</div>
+<div id="ACS" class="layer_selector">
+					<p>ACS Selectors</p>
+
+					<div class='cartodb-legend choropleth' style="bottom:-120px; left:0px">
+                  <div class="legend-title">ACS</div>
+                  <div class="legend-title" id="legendACS">Median Income</div>  
+						<ul>
+							<li class="min" id="minACS">
+								$34,568
+							</li>
+							<li class="max" id="maxACS">
+								$230,592
+							</li>
+							<li class="graph count_441">
+							<div class="colors">
+							<div class="quartile" style="background-color:#F7F7F7"></div>
+							<div class="quartile" style="background-color:#D9D9D9"></div>
+							<div class="quartile" style="background-color:#BDBDBD"></div>
+							<div class="quartile" style="background-color:#969696"></div>
+							<div class="quartile" style="background-color:#737373"></div>
+							<div class="quartile" style="background-color:#525252"></div>
+							<div class="quartile" style="background-color:#252525"></div>
+							</div>
+							</li>
+						</ul>
+						</div>
+					<ul>
+
+
+
+					<ul>
+						<li data="ACSmedianincome" data-type="cartocss">Median Income
+						</li>
+						<li data="ACSveterans" data-type="cartocss">Veterans
+						</li>
+						<li data="ACSfamilypoverty" data-type="cartocss">Families Below Poverty
+						</li>
+						<li data="ACSunemploymentcount">Unemployed Count
+						</li>
+						<li data="ACSlessthanten" data-type="cartocss">Households with income less than $10,000</li>
+						</li>
+						<li data="ACS65inpoverty" data-type="cartocss">Seniors (age 65 and up) in Poverty</li>
+					</ul>
+				</div>
+        <!-- include cartodb.js library --> 
+        <script src="http://libs.cartocdn.com/cartodb.js/v3/3.14/cartodb.js" type="text/javascript"></script>
+		 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <!-- Place your code in the script tags below -->
+        
+        <script type="text/javascript">
+			google.load('visualization', '1.0', {'packages':['corechart']});
+			  function draw_chart(data,title) {
+				 var data = google.visualization.arrayToDataTable([
+					['Year', title],
+					['2007',  data[0]],
+					['2008',  data[1]],
+					['2009',  data[2]],
+					['2010',  data[3]],
+					 ['2011', data[4]],
+					 ['2012', data[5]],
+					 ['2013', data[6]],
+					 ['2014', data[7]],
+					 ['2015', data[8]]
+				 ]);
+				  var options = {
+					title: title,
+					legend: { position: "none" },
+					  width: 500,
+					  vAxis: {title: "Count"},
+					  hAxis: {title: "Year"}
+				  };
+				  var chart = new google.visualization.LineChart(document.getElementById('countGraph'));
+				  chart.draw(data, options);
+			  }
+			  
+			window.onload = function () {
+				var tableName = "zipprogramwithv6_aggregated_merge";
+				
+				var layerURL = 'https://kb2249.cartodb.com/api/v2/viz/a91fb7cc-2e61-11e5-9503-0e4fddd5de28/viz.json';
+				// Put layer data into a JS object
+				var layerSource = {
+						user_name: 'kb2249', 
+						type: 'cartodb',
+						sublayers: [{
+
+							sql: "SELECT * FROM acs_demographics_merge WHERE population>500", //
+							cartocss: $("#ACSveterans").html() // default
+						},
+						{ 
+							sql: "SELECT * FROM zipprogramwithv6_aggregated_merge WHERE zipcodeshapefile_281_29_zipcode IS NOT NULL AND snap_percent IS NOT NULL AND population>4000", //
+							cartocss: $("#SM").html() // default
+						}]
+					}
+						
+				// Create layer selector
+				function createSelector(layer) {
+					var cartocss = "";
+					var $options = $("#cartocss").find("li");
+					$options.click(function(e) {
+						var $li = $(e.target);
+						var selected = $li.attr('data');
+
+						$options.removeClass('cartocss_selected');
+						$li.addClass('cartocss_selected');
+
+						cartocss = $('#'+selected).text();
+
+						layer.setCartoCSS(cartocss);
+						
+						var minvalue;
+						var maxvalue;
+						var legend_desc;
+						var bubble_color;
+						if ( selected == 'SNAP' ) {
+							minvalue = '76.67%';
+							maxvalue = '90%';
+							legend_desc = 'SNAP Percentage';
+							bubble_color = {background:'##FF6600'}
+						} else if ( selected == 'DRIE' ) {
+							minvalue = '0.48%';
+							maxvalue = '10.87%';
+							legend_desc = 'DRIE Percentage';
+							bubble_color = {background:'#F84F40'}
+						} else if ( selected == 'SCRIE' ) {
+							minvalue = '0.32%';
+							maxvalue = '41.75%';
+							legend_desc = 'SCRIE Percentage';
+							bubble_color = {background:'#41006D'}
+						} else if ( selected == 'CA' ) {
+							minvalue = '49.15%';
+							maxvalue = '71.43%';
+							legend_desc = 'CASH ASSISTANCE Percentage';
+							bubble_color = {background:'#7B00B4'}
+						} else if ( selected == 'CDCTC' ) {
+							minvalue = '4.28%';
+							maxvalue = '35.71%';
+							legend_desc = 'CDC TAX CREDIT Percentage';
+							bubble_color = {background:'#081B47'}
+						} else if ( selected == 'CTC' ) {
+							minvalue = '14.12%';
+							maxvalue = '54.69%';
+							legend_desc = 'CHILD TAX CREDIT Percentage';
+							bubble_color = {background:'#2E5387'}
+						} else if ( selected == 'EITC' ) {
+							minvalue = '14.64%';
+							maxvalue = '54.88%';
+							legend_desc = 'EITC Percentage';
+							bubble_color = {background:'#5CA2D1'}
+						} else if ( selected == 'SM' ) {
+							minvalue = '7.95%';
+							maxvalue = '50.37%';
+							legend_desc = 'SCHOOL MEAL Percentage';
+							bubble_color = {background:'#FF9900'}
+						} else {
+							minvalue = '49.44%';
+							maxvalue = '71.49%';
+							legend_desc = 'SECT8 Percentage';
+							bubble_color = {background:'#B81609'}
+						}
+						
+						$('#minCount').html(minvalue);
+						$('#maxCount').html(maxvalue);
+						$('#legendCount').html(legend_desc);
+						$('.graph').css(bubble_color)
+						
+					});
+				}
+
+				function createAcsSelector(layer) {
+					var cartocss = "";
+					var $options = $("#ACS").find("li");
+					$options.click(function(e) {
+						var $li = $(e.target);
+						var selected = $li.attr('data');
+
+						$options.removeClass('cartocss_selected');
+						$li.addClass('cartocss_selected');
+
+						cartocss = $('#'+selected).text();
+
+						layer.setCartoCSS(cartocss);
+						var minvalue;
+						var maxvalue;
+						var legend_desc;
+						if ( selected == 'ACSveterans' ) {
+							minvalue = 484;
+							maxvalue = 3687;
+							legend_desc = 'Veteran Count';
+						} else if ( selected == 'ACSfamilypoverty' ) {
+							minvalue = 250;
+							maxvalue = 7478;
+							legend_desc = 'Family in Poverty Count';
+						} else if ( selected == 'ACSunemploymentcount' ) {
+							minvalue = 866;
+							maxvalue = 7939;
+							legend_desc = 'Unemployment Count';
+						} else if ( selected == 'ACSlessthanten' ) {
+							minvalue = 342;
+							maxvalue = 6423;
+							legend_desc = 'Household with income < $10,000';
+						} else if ( selected == 'ACS65inpoverty' ) {
+							minvalue = 205;
+							maxvalue = 5115;
+							legend_desc = 'Senior over 65 and in poverty';
+						} else {
+							minvalue = '$34,568';
+							maxvalue = '$230,592';
+							legend_desc = 'Median Income';
+						}
+						$('#minACS').html(minvalue);
+						$('#maxACS').html(maxvalue);
+						$('#legendACS').html(legend_desc);
+					});
+				}
+
+					// Instantiate new map object, place it in 'map' element
+					var map_object = new L.Map('map', {
+						center: [40.7127,-73.8059], // NYC
+						zoom: 11
+					});
+
+          map_object.scrollWheelZoom.disable();
+
+					L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+						attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+					}).addTo(map_object);
+					// For storing the sublayer
+					var AccessSublayer;
+					var AcsSublayer
+					// Add data layer to your map
+					cartodb.createLayer(map_object,layerURL,{legends:false})
+						.addTo(map_object)
+						.done(function(layer) {
+							AccessSublayer = layer.getSubLayer(1);
+							AcsSublayer = layer.getSubLayer(0);
+							layer.getSubLayer(2).hide();
+							
+							createAcsSelector(AcsSublayer);
+							createSelector(AccessSublayer);
+							layer.on('featureClick', function(ev, pos, latlng, data){
+								var cartodb_id = data.cartodb_id;
+								
+								var baseAPI ='http://kb2249.cartodb.com/api/v2/sql?format=GEOJSON&q=SELECT * FROM zipprogramwithv6byyearcount_and_aggregated WHERE zipcodeshapefile_281_29_zipcode IS NOT NULL AND cartodb_id =';
+								$.getJSON(baseAPI + cartodb_id, function(res) {
+									
+									var $option = $("#cartocss").find("li.cartocss_selected");
+									var selected = $option.attr('data');
+									
+									var inputxy;
+									var titlename;
+							
+									if ( selected == 'SNAP' ) {
+										inputxy = [res.features[0].properties.snap_2007,
+													res.features[0].properties.snap_2008,
+													res.features[0].properties.snap_2009,
+													res.features[0].properties.snap_2010,
+													res.features[0].properties.snap_2011,
+													res.features[0].properties.snap_2012,
+													res.features[0].properties.snap_2013,
+													res.features[0].properties.snap_2014,
+													res.features[0].properties.snap_2015];
+										titlename = 'SNAP Eligibility Count';
+									} else if ( selected == 'DRIE' ) {
+										inputxy = [res.features[0].properties.drie_2007,
+													res.features[0].properties.drie_2008,
+													res.features[0].properties.drie_2009,
+													res.features[0].properties.drie_2010,
+													res.features[0].properties.drie_2011,
+													res.features[0].properties.drie_2012,
+													res.features[0].properties.drie_2013,
+													res.features[0].properties.drie_2014,
+													res.features[0].properties.drie_2015];
+										titlename = 'DRIE Eligibility Count';
+									} else if ( selected == 'SCRIE' ) {
+										inputxy = [res.features[0].properties.scrie_2007,
+													res.features[0].properties.scrie_2008,
+													res.features[0].properties.scrie_2009,
+													res.features[0].properties.scrie_2010,
+													res.features[0].properties.scrie_2011,
+													res.features[0].properties.scrie_2012,
+													res.features[0].properties.scrie_2013,
+													res.features[0].properties.scrie_2014,
+													res.features[0].properties.scrie_2015];
+										titlename = 'SCRIE Eligibility Count';
+									} else if ( selected == 'CA' ) {
+										inputxy = [res.features[0].properties.cashassist_2007,
+													res.features[0].properties.cashassist_2008,
+													res.features[0].properties.cashassist_2009,
+													res.features[0].properties.cashassist_2010,
+													res.features[0].properties.cashassist_2011,
+													res.features[0].properties.cashassist_2012,
+													res.features[0].properties.cashassist_2013,
+													res.features[0].properties.cashassist_2014,
+													res.features[0].properties.cashassist_2015];
+										titlename = 'CASH ASSISTANT Eligibility Count';
+									} else if ( selected == 'CDCTC' ) {
+										inputxy = [res.features[0].properties.cdctc_2007,
+													res.features[0].properties.cdctc_2008,
+													res.features[0].properties.cdctc_2009,
+													res.features[0].properties.cdctc_2010,
+													res.features[0].properties.cdctc_2011,
+													res.features[0].properties.cdctc_2012,
+													res.features[0].properties.cdctc_2013,
+													res.features[0].properties.cdctc_2014,
+													res.features[0].properties.cdctc_2015];
+										titlename = 'CDC TAX CREDIT Eligibility Count';
+									} else if ( selected == 'CTC' ) {
+										inputxy = [res.features[0].properties.ctc_2007,
+													res.features[0].properties.ctc_2008,
+													res.features[0].properties.ctc_2009,
+													res.features[0].properties.ctc_2010,
+													res.features[0].properties.ctc_2011,
+													res.features[0].properties.ctc_2012,
+													res.features[0].properties.ctc_2013,
+													res.features[0].properties.ctc_2014,
+													res.features[0].properties.ctc_2015];
+										titlename = 'CHILD TAX CREDIT Eligibility Count';
+									} else if ( selected == 'EITC' ) {
+										inputxy = [res.features[0].properties.eitc_2007,
+													res.features[0].properties.eitc_2008,
+													res.features[0].properties.eitc_2009,
+													res.features[0].properties.eitc_2010,
+													res.features[0].properties.eitc_2011,
+													res.features[0].properties.eitc_2012,
+													res.features[0].properties.eitc_2013,
+													res.features[0].properties.eitc_2014,
+													res.features[0].properties.eitc_2015];
+										titlename = 'EITC Eligibility Count';
+									} else if ( selected == 'SM' ) {
+										inputxy = [res.features[0].properties.schoolmeal_2007,
+													res.features[0].properties.schoolmeal_2008,
+													res.features[0].properties.schoolmeal_2009,
+													res.features[0].properties.schoolmeal_2010,
+													res.features[0].properties.schoolmeal_2011,
+													res.features[0].properties.schoolmeal_2012,
+													res.features[0].properties.schoolmeal_2013,
+													res.features[0].properties.schoolmeal_2014,
+													res.features[0].properties.schoolmeal_2015];
+										titlename = 'SCHOOL MEAL Eligibility Count';
+									} else {
+										inputxy = [res.features[0].properties.sect8_2007,
+													res.features[0].properties.sect8_2008,
+													res.features[0].properties.sect8_2009,
+													res.features[0].properties.sect8_2010,
+													res.features[0].properties.sect8_2011,
+													res.features[0].properties.sect8_2012,
+													res.features[0].properties.sect8_2013,
+													res.features[0].properties.sect8_2014,
+													res.features[0].properties.sect8_2015];
+										titlename = 'SECT8 Eligibility Count';
+									}
+									draw_chart(inputxy,titlename);
+								});
+								
+							});
+						})
+						.error(function(err) {
+							console.log("error: " + err);
+						});
+			}
+	</script>
+    	<div class='sidebar mainSidebar'>
+            <h4 class='Description'>Eligibility Count by Year</h4>
+            <div id="chartContainer">
+               <div id="countDetails"></div>
+                <div id="countGraph"></div>
+            </div>
+        </div>
+    </body>
+</html>
